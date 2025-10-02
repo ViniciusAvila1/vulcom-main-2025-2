@@ -7,6 +7,13 @@ import logger from 'morgan'
 
 const app = express()
 
+import cors from 'cors'
+
+app.use(cors({
+    origin: process.env.ALLOWED_ORIGINS.split(','), // Permite apenas as origens especificadas no .env
+    // credentials: true // Se precisar enviar cookies ou cabeçalhos de autenticação
+})) // Habilita CORS para todas as rotas
+
 app.use(logger('dev'))
 app.use(json())
 app.use(urlencoded({ extended: false }))
