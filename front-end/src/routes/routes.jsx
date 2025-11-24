@@ -1,3 +1,10 @@
+
+/*
+ Define as rotas e suas informações, servindo como fonte única
+ de verdade para AppRoutes.jsx e MainMenu.jsx.
+*/
+
+
 import Homepage from '../pages/Homepage'
 
 
@@ -16,6 +23,7 @@ import UserList from '../pages/user/UserList'
 import UserForm from '../pages/user/UserForm'
 
 import BruteForce from '../pages/BruteForce'
+
 
 /*
  Os níveis de acesso foram definidos como segue:
@@ -110,7 +118,9 @@ const routes = [
    element: <BruteForce />,
    userLevel: UserLevel.ADMIN,
    divider: true
- },
-
+ }
 ]
+
+
 export { routes, UserLevel }
+

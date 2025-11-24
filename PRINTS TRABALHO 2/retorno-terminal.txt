@@ -1,0 +1,44 @@
+SELECT `main`.`Customer`.`id`, `main`.`Customer`.`name`, `main`.`Customer`.`ident_document`, `main`.`Customer`.`birth_date`, `main`.`Customer`.`street_name`, `main`.`Customer`.`house_number`, `main`.`Customer`.`complements`, `main`.`Customer`.`district`, `main`.`Customer`.`municipality`, `main`.`Customer`.`state`, `main`.`Customer`.`phone`, `main`.`Customer`.`email` FROM `main`.`Customer` WHERE 1=1 ORDER BY `main`.`Customer`.`name` ASC LIMIT ? OFFSET ?PARAMS: [-1,0]
+GET /customers 304 32.620 ms - -
+ZodError: [
+  {
+    "origin": "string",
+    "code": "too_big",
+    "maximum": 25,
+    "inclusive": true,
+    "path": [
+      "brand"
+    ],
+    "message": "A marca deve ter, no máximo, 25 caracteres."
+  },
+  {
+    "origin": "string",
+    "code": "too_small",
+    "minimum": 1,
+    "inclusive": true,
+    "path": [
+      "model"
+    ],
+    "message": "O modelo deve ter, no mínimo, 1 caractere."
+  },
+  {
+    "origin": "date",
+    "code": "too_small",
+    "minimum": "2020-03-20T00:00:00.000Z",
+    "inclusive": true,
+    "path": [
+      "selling_date"
+    ],
+    "message": "A data de venda não pode ser anterior a 20/03/2020."        
+  },
+  {
+    "origin": "number",
+    "code": "too_small",
+    "minimum": 5000,
+    "inclusive": true,
+    "path": [
+      "selling_price"
+    ],
+    "message": "O preço de venda deve ser no mínimo R$ 5.000,00."
+  }
+]

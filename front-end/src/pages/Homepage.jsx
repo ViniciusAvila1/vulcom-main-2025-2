@@ -25,7 +25,7 @@ export default function Homepage() {
         Sistema para análise e estudo de vulnerabilidades comuns  
       </Typography>
 
-      <Typography variant="h6">
+      {/*<Typography variant="h6">
         Exposição de valores do <em>local storage</em>
         <Typography variant="caption" style={{ fontFamily: 'monospace '}}>
           {
@@ -35,7 +35,7 @@ export default function Homepage() {
           }
         </Typography>
       </Typography>
-
+      */}
       <Typography variant="h6">
         Exposição de <em>Cookies</em>
         <Typography variant="caption" style={{ fontFamily: 'monospace '}}>

@@ -96,6 +96,10 @@ controller.retrieveOne = async function(req, res) {
 controller.update = async function(req, res) {
   try {
 
+    // Somente usuários adminsitradores podem acessar este recurso
+    // HTTP 403: Forbidden(
+    if(! req?.authUser?.is_admin) return res.status(403).end()
+
     // Verifica se existe o campo "password" em "req.body".
     // Caso positivo, geramos o hash da senha antes de enviá-la
     // ao BD
@@ -129,6 +133,7 @@ controller.delete = async function(req, res) {
     // Somente usuários administradores podem acessar este recurso
     // HTTP 403: Forbidden(
     if(! req?.authUser?.is_admin) return res.status(403).end()
+      
     await prisma.user.delete({
       where: { id: Number(req.params.id) }
     })
@@ -203,9 +208,18 @@ controller.login = async function(req, res) {
         maxAge: 24 * 60 * 60 * 100  // 24h
       })
 
+      // Cookie não HTTP-only, acessível pelo JS no front-end
+      res.cookie('not-http-only', 'Este-cookie-NAO-eh-http-only', {
+        httpOnly: false,
+        secure: true,
+        sameSite: 'None',
+        path: '/',
+        maxAge: 24 * 60 * 60 * 100  // 24h
+      })
+
       // Retorna o token e o usuário autenticado com
       // HTTP 200: OK (implícito)
-      res.send({token, user})
+      res.send({user})
 
   }
   catch(error) {
@@ -220,7 +234,7 @@ controller.login = async function(req, res) {
 controller.me = function(req, res) {
   // Retorna as informações do usuário autenticado
   // HTTP 200: OK (implícito)
-  res.send({user})
+  res.send(req?.authUser)
 }
 
 controller.logout = function(req, res) {

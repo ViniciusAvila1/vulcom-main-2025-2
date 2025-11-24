@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import myfetch from '../lib/myfetch'
@@ -87,3 +88,4 @@ export default function AuthGuard({ children, userLevel = UserLevel.ANY }) {
    console.log('AUTHGUARD:', authUser)
    return children
  }
+
