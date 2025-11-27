@@ -39,10 +39,23 @@ controller.create = async function(req, res) {
 controller.retrieveAll = async function(req, res) {
   try {
 
+    /*
+      aqui é a vulnerabilidade API6:2023 Acesso irrestrito a fluxos de negócios sensíveis
+
+      a vulnerabilidade foi evitada ao implementar os métodos de controle de acesso
+      para que somente usuários administradores possam acessar a lista de usuários do sistema
+    */
+
     // Somente usuários administradores podem acessar este recurso
     // HTTP 403: Forbidden(
     if(! req?.authUser?.is_admin) return res.status(403).end()
       
+      /*
+        aqui é a vulnerabilidade API3:2023 - Falha de autenticação a nível de propriedade
+
+        a senha é omitida da resposta, evitando exposição de hashes de senha
+      */
+
     const result = await prisma.user.findMany(
       // Omite o campo "password" do resultado
       // por questão de segurança
@@ -64,6 +77,12 @@ controller.retrieveAll = async function(req, res) {
 
 controller.retrieveOne = async function(req, res) {
   try {
+
+    /*
+      Aqui foi a API1:2023 - Falha de autenticação a nível de objeto
+
+      sem a verificalção, qualquer usuário autenticado poderia acessar os dados de qualquer outro usuário alterando o ID na URL
+    */
 
     // Somente usuários administradores ou o próprio usuário
     // autenticado podem acessar este recurso
@@ -182,6 +201,12 @@ controller.login = async function(req, res) {
       
       // Chamando bcrypt.compare() para verificar se o hash da senha
       // enviada coincide com o hash da senha armazenada no BD
+
+      /* prova 2:
+      Vulnerabilidade: API2:223 - Falha de autenticação
+       aqui foi removida a autenticação fixa e implementada uma validação segura com bcryp, que seria referente a API2, de falha de autenticação.
+       é seguro agora pois há a comparação do hash da senha com bcrypt.compare(), garantindo que a senha enviada é a mesma no banco.
+      */
       const passwordIsValid = await bcrypt.compare(req.body?.password, user.password)
 
       // Se a senha estiver errada, retorna
